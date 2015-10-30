@@ -1,3 +1,9 @@
 # dockarmaiii-headless
-A docker container for creating an ArmA3 Headless Client (HC)
+A docker container for creating ArmA3 Headless Client's (HC)
+
+To start a simple container:
+```bash
+	docker run -d thalhalla/dockarmaiii-headless
+```
+
 
