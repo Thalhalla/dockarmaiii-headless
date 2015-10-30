@@ -23,19 +23,19 @@ RUN chmod 755 /run.sh
 
 # Override the default start.sh
 COPY ./start.sh /start.sh
-RUN chmod 755 /start.sh
-    && gpasswd -a steam tty
+RUN chmod 755 /start.sh  && \
+    gpasswd -a steam tty
 
 USER steam
 RUN echo 'new-session' >> ~/.tmux.conf
 
 # Create the directories used to store the profile files and Arma3.cfg file
-RUN mkdir -p "~/.local/share/Arma 3"
-    && mkdir -p "~/.local/share/Arma 3 - Other Profiles"
+RUN mkdir -p "~/.local/share/Arma 3" && \
+    mkdir -p "~/.local/share/Arma 3 - Other Profiles"
 
 # Download server binary and prep for execution
 WORKDIR /home/steam
-RUN wget http://gameservermanagers.com/dl/arma3server
-    && chmod +x arma3server
+RUN wget http://gameservermanagers.com/dl/arma3servera && \
+    chmod +x arma3server
 
 ENTRYPOINT ["/start.sh"]
