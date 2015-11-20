@@ -8,7 +8,7 @@ help:
 
 build: builddocker beep
 
-run: steam_username steam_password steam_guard_code link_container target_ip builddocker rundocker beep
+run: steam_username steam_password steam_guard_code target_ip builddocker rundocker beep
 
 rundocker:
 	@docker run \
