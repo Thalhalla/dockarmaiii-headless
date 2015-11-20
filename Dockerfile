@@ -39,8 +39,8 @@ RUN wget http://gameservermanagers.com/dl/arma3server -O arma3hc \
 
 # configure arma3hc
 RUN echo sed \
-        && sed -i "s/steamuser=\"username\"/steamuser='$STEAM_USERNAME'/" arma3hc \
-        && sed -i "s/steampass=\"password\"/steampass='$STEAM_PASSWORD'/" arma3hc \
+        && sed -i "s/steamuser=\"anonymous\"/steamuser='$STEAM_USERNAME'/" arma3hc \
+        && sed -i "s/steampass=\" \"/steampass='$STEAM_PASSWORD'/" arma3hc \
         && sed -i "s/ip=\"0.0.0.0\"/ip=\"0.0.0.0\"\ntarget_ip='$TARGET_IP'/" arma3hc
 
 # force install the arma3 server binaries
