@@ -1,17 +1,17 @@
 all: help
 
 help:
-        @echo ""
-        @echo "-- Help Menu"
-        @echo ""  This is merely a base image for usage read the README file
-        @echo ""   1. make run       - build and run docker container
+	@echo ""
+	@echo "-- Help Menu"
+	@echo ""  This is merely a base image for usage read the README file
+	@echo ""   1. make run       - build and run docker container
 
 build: builddocker beep
 
 run: steam_username steam_password steam_guard_code link_container target_ip builddocker rundocker beep
 
 rundocker:
-        @docker run \
+	@docker run \
         --cidfile="cid" \
         --env STEAM_USERNAME=`cat steam_username` \
 	--env STEAM_PASSWORD=`cat steam_password` \
@@ -27,20 +27,20 @@ builddocker:
         /usr/bin/time -v docker build -t thalhalla/dockarmaiii-headless .
 
 beep:
-        @echo "beep"
+	@echo "beep"
 
 kill:
-        @docker kill `cat cid`
+	@docker kill `cat cid`
 
 rm-steamer:
-        rm  steamer.txt
+	rm steamer.txt
 
 rm-name:
-        rm  name
+	rm name
 
 rm-image:
-        @docker rm `cat cid`
-        @rm cid
+	@docker rm `cat cid`
+	@rm cid
 
 cleanfiles:
 	rm steam_username
