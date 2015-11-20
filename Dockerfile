@@ -16,6 +16,7 @@ ENV STEAM_USERNAME anonymous
 ENV STEAM_PASSWORD ' '
 ENV STEAM_GUARD_CODE ' '
 ENV TARGET_IP '0.0.0.0'
+ENV PASSWORD ' '
 
 # and override this file with the command to start your server
 COPY ./start.sh /start.sh
@@ -47,13 +48,13 @@ RUN yes y|./arma3hc install
 
 # configure server to be a headless client
 RUN sed -i \
-    's|parms="-netlog -ip=${ip}|parms="-netlog -nosound -port=2302 -client -password=PDGOP -connect=${target_ip} -BEpath=/home/steam/BE -ip=${ip}|' \
+    's|parms="-netlog -ip=${ip}|parms="-netlog -nosound -port=2302 -client -password=$PASSWORD -connect=${target_ip} -BEpath=/home/steam/BE -ip=${ip}|' \
     /home/steam/arma3hc
 
 # configure ports to offset from default
-WORKDIR /home/steam/serverfiles/cfg
-RUN sed -i 's/serverport=2302/serverport=2402/' arma3-server.server.cfg \
-    && sed -i 's/steamport=2304/steamport=2404/' arma3-server.server.cfg \
-    && sed -i 's/steamqueryport=2303/steamqueryport=2403/' arma3-server.server.cfg
+# WORKDIR /home/steam/serverfiles/cfg
+# RUN sed -i 's/serverport=2302/serverport=2402/' arma3-server.server.cfg \
+#     && sed -i 's/steamport=2304/steamport=2404/' arma3-server.server.cfg \
+#     && sed -i 's/steamqueryport=2303/steamqueryport=2403/' arma3-server.server.cfg
 
 ENTRYPOINT ["/start.sh"]
