@@ -24,7 +24,7 @@ rundocker:
 	-t thalhalla/dockarmaiii-headless
 
 builddocker:
-        /usr/bin/time -v docker build -t thalhalla/dockarmaiii-headless .
+	/usr/bin/time -v docker build -t thalhalla/dockarmaiii-headless .
 
 beep:
 	@echo "beep"
