@@ -33,7 +33,7 @@ RUN echo 'new-session' >> ~/.tmux.conf \
     && mkdir -p "~/.local/share/Arma 3 - Other Profiles"
 
 WORKDIR /home/steam
-RUN wget http://gameservermanagers.com/dl/arma3server -0 arma3hc \
+RUN wget http://gameservermanagers.com/dl/arma3server -O arma3hc \
     && chmod +x arma3hc 
 
 # configure arma3hc
