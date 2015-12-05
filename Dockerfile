@@ -2,7 +2,7 @@ FROM thalhalla/steamer
 MAINTAINER James S. Moore <james 'at' ohmydocker com>
 
 USER root
-ENV DOCKARMAIIIHC_UPDATED 2015111901
+ENV DOCKARMAIIIHC_UPDATED 2015120401
 
 EXPOSE 2302
 EXPOSE 2303
@@ -15,7 +15,8 @@ EXPOSE 2345
 ENV STEAM_USERNAME anonymous
 ENV STEAM_PASSWORD ' '
 ENV STEAM_GUARD_CODE ' '
-ENV TARGET_IP '0.0.0.0'
+ENV TARGET_IP ' '
+ENV IP ' '
 ENV PASSWORD ' '
 
 # and override this file with the command to start your server
@@ -41,7 +42,7 @@ RUN wget http://gameservermanagers.com/dl/arma3server -O arma3hc \
 RUN echo sed \
         && sed -i "s/steamuser=\"anonymous\"/steamuser='$STEAM_USERNAME'/" arma3hc \
         && sed -i "s/steampass=\" \"/steampass='$STEAM_PASSWORD'/" arma3hc \
-        && sed -i "s/ip=\"0.0.0.0\"/ip=\"0.0.0.0\"\ntarget_ip='$TARGET_IP'/" arma3hc
+        && sed -i "s/ip=\"0.0.0.0\"/ip='$IP'\ntarget_ip='$TARGET_IP'/" arma3hc
 
 # force install the arma3 server binaries
 RUN yes y|./arma3hc install
