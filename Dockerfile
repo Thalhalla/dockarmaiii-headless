@@ -17,16 +17,24 @@ ENV STEAM_PASSWORD ' '
 ENV STEAM_GUARD_CODE ' '
 ENV TARGET_IP ' '
 ENV IP ' '
-ENV PASSWORD ' '
+ENV SERVER_PASSWORD ' '
+
+# ensure steam user is in tty group
+RUN gpasswd -a steam tty
+
+USER steam
+WORKDIR /home/steam
+RUN ./steamcmd/steamcmd.sh \
+        +login $STEAM_USERNAME $STEAM_PASSWORD \
+        +force_install_dir ./arma3/ \
+        +app_update 233780 validate \
+        +quit
 
 # and override this file with the command to start your server
 COPY ./start.sh /start.sh
 COPY ./run.sh /run.sh
 RUN chmod 755 /run.sh \
-    && chmod 755 /start.sh \
-    && gpasswd -a steam tty 
-
-USER steam
+    && chmod 755 /start.sh
 
 # Default tmux session
 # Create the directories used to store the profile files and Arma3.cfg file
