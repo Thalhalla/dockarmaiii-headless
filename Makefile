@@ -115,7 +115,7 @@ TARGET_IP:
 	@while [ -z "$$TARGET_IP" ]; do \
 		read -r -p "Enter IP address of the target Arma3 server [TARGET_IP]: " TARGET_IP; echo "$$TARGET_IP">>TARGET_IP; cat TARGET_IP; \
 	done ;
-SERVER_PASS:
-	@while [ -z "$$SERVER_PASS" ]; do \
-		read -r -p "Enter password for the Arma3 server [SERVER_PASS]: " SERVER_PASS; echo "$$SERVER_PASS">>SERVER_PASS; cat SERVER_PASS; \
+SERVER_PASSWORD:
+	@while [ -z "$$SERVER_PASSWORD" ]; do \
+		read -r -p "Enter password for the Arma3 server [SERVER_PASSWORD]: " SERVER_PASSWORD; echo "$$SERVER_PASSWORD">>SERVER_PASSWORD; cat SERVER_PASSWORD; \
 	done ;
