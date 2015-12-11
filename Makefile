@@ -17,7 +17,8 @@ help:
 	@echo ""   4. make enter     - execute an interactive bash in docker container
 	@echo ""   3. make logs      - follow the logs of docker container
 
-build: NAME TAG builddocker
+build: 
+	NAME TAG STEAM_USERNAME STEAM_PASSWORD IP TARGET_IP SERVER_PASSWORD builddocker
 
 # run a plain container
 run: build rundocker
@@ -47,11 +48,21 @@ rundocker:
 	$(eval TMP := $(shell mktemp -d --suffix=DOCKERTMP))
 	$(eval NAME := $(shell cat NAME))
 	$(eval TAG := $(shell cat TAG))
+	$(eval STEAM_USERNAME := $(shell cat STEAM_USERNAME))
+	$(eval STEAM_PASSWORD := $(shell cat STEAM_PASSWORD))
+	$(eval IP := $(shell cat IP))
+	$(eval TARGET_IP := $(shell cat TARGET_IP))
+	$(eval SERVER_PASSWORD := $(shell cat SERVER_PASSWORD))
 	chmod 777 $(TMP)
 	@docker run --name=$(NAME) \
 	--cidfile="cid" \
 	-v $(TMP):/tmp \
 	-d \
+	-e STEAM_USERNAME=$(STEAM_USERNAME) \
+	-e STEAM_PASSWORD=$(STEAM_PASSWORD) \
+	-e IP=$(IP) \
+	-e TARGET_IP=$(TARGET_IP) \
+	-e SERVER_PASSWORD=$(SERVER_PASSWORD) \
 	-P \
 	-v /var/run/docker.sock:/run/docker.sock \
 	-v $(shell which docker):/bin/docker \
@@ -85,4 +96,27 @@ NAME:
 TAG:
 	@while [ -z "$$TAG" ]; do \
 		read -r -p "Enter the tag you wish to associate with this container [TAG]: " TAG; echo "$$TAG">>TAG; cat TAG; \
+	done ;
+
+
+# Steam Specific Additions
+STEAM_USERNAME:
+	@while [ -z "$$STEAM_USERNAME" ]; do \
+		read -r -p "Enter the Steam user [STEAM_USERNAME]: " STEAM_USERNAME; echo "$$STEAM_USERNAME">>STEAM_USERNAME; cat STEAM_USERNAME; \
+	done ;
+STEAM_PASSWORD:
+	@while [ -z "$$STEAM_PASSWORD" ]; do \
+		read -r -p "Enter the Steam password [STEAM_PASSWORD]: " STEAM_PASSWORD; echo "$$STEAM_PASSWORD">>STEAM_PASSWORD; cat STEAM_PASSWORD; \
+	done ;
+IP:
+	@while [ -z "$$IP" ]; do \
+		read -r -p "Enter IP address to assign to this container [IP]: " IP; echo "$$IP">>IP; cat IP; \
+	done ;
+TARGET_IP:
+	@while [ -z "$$TARGET_IP" ]; do \
+		read -r -p "Enter IP address of the target Arma3 server [TARGET_IP]: " TARGET_IP; echo "$$TARGET_IP">>TARGET_IP; cat TARGET_IP; \
+	done ;
+SERVER_PASS:
+	@while [ -z "$$SERVER_PASS" ]; do \
+		read -r -p "Enter password for the Arma3 server [SERVER_PASS]: " SERVER_PASS; echo "$$SERVER_PASS">>SERVER_PASS; cat SERVER_PASS; \
 	done ;
