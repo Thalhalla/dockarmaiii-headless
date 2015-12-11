@@ -2,7 +2,7 @@ FROM thalhalla/steamer
 MAINTAINER James S. Moore <james 'at' ohmydocker com>
 
 USER root
-ENV DOCKARMAIIIHC_UPDATED 2015120401
+ENV DOCKARMAIIIHC_UPDATED 2015121001
 
 EXPOSE 2302
 EXPOSE 2303
@@ -35,22 +35,22 @@ RUN echo 'new-session' >> ~/.tmux.conf \
     && mkdir -p "~/.local/share/Arma 3 - Other Profiles"
 
 WORKDIR /home/steam
-RUN wget http://gameservermanagers.com/dl/arma3server -O arma3hc \
-    && chmod +x arma3hc 
+#RUN wget http://gameservermanagers.com/dl/arma3server -O arma3hc \
+#    && chmod +x arma3hc 
 
 # configure arma3hc
-RUN echo sed \
-        && sed -i "s/steamuser=\"anonymous\"/steamuser='$STEAM_USERNAME'/" arma3hc \
-        && sed -i "s/steampass=\" \"/steampass='$STEAM_PASSWORD'/" arma3hc \
-        && sed -i "s/ip=\"0.0.0.0\"/ip='$IP'\ntarget_ip='$TARGET_IP'/" arma3hc
+#RUN echo sed \
+#        && sed -i "s/steamuser=\"anonymous\"/steamuser='$STEAM_USERNAME'/" arma3hc \
+#        && sed -i "s/steampass=\" \"/steampass='$STEAM_PASSWORD'/" arma3hc \
+#        && sed -i "s/ip=\"0.0.0.0\"/ip='$IP'\ntarget_ip='$TARGET_IP'/" arma3hc
 
 # force install the arma3 server binaries
-RUN yes y|./arma3hc install
+#RUN yes y|./arma3hc install
 
 # configure server to be a headless client
-RUN sed -i \
-    's|parms="-netlog -ip=${ip}|parms="-netlog -nosound -port=2302 -client -password=$PASSWORD -connect=${target_ip} -BEpath=/home/steam/BE -ip=${ip}|' \
-    /home/steam/arma3hc
+#RUN sed -i \
+#    's|parms="-netlog -ip=${ip}|parms="-netlog -nosound -port=2302 -client -password=$PASSWORD -connect=${target_ip} -BEpath=/home/steam/BE -ip=${ip}|' \
+#    /home/steam/arma3hc
 
 # configure ports to offset from default
 # WORKDIR /home/steam/serverfiles/cfg
