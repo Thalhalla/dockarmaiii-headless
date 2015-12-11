@@ -19,7 +19,6 @@ EXPOSE 2345
 #ENV IP ' '
 #ENV SERVER_PASSWORD ' '
 
-
 # and override this file with the command to start your server
 USER root
 COPY ./start.sh /start.sh
@@ -31,7 +30,9 @@ RUN chmod 755 /run.sh \
 RUN gpasswd -a steam tty
 
 USER steam
-WORKDIR /home/steam
+WORKDIR /home/steam/steamcmd
+RUN tar xvfz steamcmd_linux.tar.gz ./
+
 #RUN ./steamcmd/steamcmd.sh \
 #        +login $STEAM_USERNAME $STEAM_PASSWORD \
 #        +force_install_dir ./arma3/ \
