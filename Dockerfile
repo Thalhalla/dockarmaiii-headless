@@ -19,6 +19,14 @@ EXPOSE 2345
 #ENV IP ' '
 #ENV SERVER_PASSWORD ' '
 
+
+# and override this file with the command to start your server
+USER root
+COPY ./start.sh /start.sh
+COPY ./run.sh /run.sh
+RUN chmod 755 /run.sh \
+    && chmod 755 /start.sh
+
 # ensure steam user is in tty group
 RUN gpasswd -a steam tty
 
@@ -29,12 +37,6 @@ WORKDIR /home/steam
 #        +force_install_dir ./arma3/ \
 #        +app_update 233780 validate \
 #        +quit
-
-# and override this file with the command to start your server
-COPY ./start.sh /start.sh
-COPY ./run.sh /run.sh
-RUN chmod 755 /run.sh \
-    && chmod 755 /start.sh
 
 # Default tmux session
 # Create the directories used to store the profile files and Arma3.cfg file
