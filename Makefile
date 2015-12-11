@@ -17,8 +17,7 @@ help:
 	@echo ""   4. make enter     - execute an interactive bash in docker container
 	@echo ""   3. make logs      - follow the logs of docker container
 
-build: 
-	NAME TAG STEAM_USERNAME STEAM_PASSWORD IP TARGET_IP SERVER_PASSWORD builddocker
+build: NAME TAG STEAM_USERNAME STEAM_PASSWORD IP TARGET_IP SERVER_PASSWORD builddocker
 
 # run a plain container
 run: build rundocker
