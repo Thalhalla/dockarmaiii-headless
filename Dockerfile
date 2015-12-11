@@ -12,12 +12,12 @@ EXPOSE 2344
 EXPOSE 2345
 
 # override these variables in your Dockerfile
-ENV STEAM_USERNAME anonymous
-ENV STEAM_PASSWORD ' '
-ENV STEAM_GUARD_CODE ' '
-ENV TARGET_IP ' '
-ENV IP ' '
-ENV SERVER_PASSWORD ' '
+#ENV STEAM_USERNAME anonymous
+#ENV STEAM_PASSWORD ' '
+#ENV STEAM_GUARD_CODE ' '
+#ENV TARGET_IP ' '
+#ENV IP ' '
+#ENV SERVER_PASSWORD ' '
 
 # ensure steam user is in tty group
 RUN gpasswd -a steam tty
