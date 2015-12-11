@@ -24,11 +24,11 @@ RUN gpasswd -a steam tty
 
 USER steam
 WORKDIR /home/steam
-RUN ./steamcmd/steamcmd.sh \
-        +login $STEAM_USERNAME $STEAM_PASSWORD \
-        +force_install_dir ./arma3/ \
-        +app_update 233780 validate \
-        +quit
+#RUN ./steamcmd/steamcmd.sh \
+#        +login $STEAM_USERNAME $STEAM_PASSWORD \
+#        +force_install_dir ./arma3/ \
+#        +app_update 233780 validate \
+#        +quit
 
 # and override this file with the command to start your server
 COPY ./start.sh /start.sh
