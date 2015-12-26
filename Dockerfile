@@ -26,42 +26,48 @@ COPY ./run.sh /run.sh
 RUN chmod 755 /run.sh \
     && chmod 755 /start.sh
 
+WORKDIR /home/steam/steamcmd
+RUN tar xvfz steamcmd_linux.tar.gz \
+	&& chown -R steam. /home/steam
+
 # ensure steam user is in tty group
 RUN gpasswd -a steam tty
 
 USER steam
-WORKDIR /home/steam/steamcmd
-RUN tar xvfz steamcmd_linux.tar.gz ./
 
-#RUN ./steamcmd/steamcmd.sh \
-#        +login $STEAM_USERNAME $STEAM_PASSWORD \
-#        +force_install_dir ./arma3/ \
+RUN printenv
+
+#RUN /home/steam/steamcmd/steamcmd.sh \
+#        +login thalhallatyr 'asgard1776!' \
+#        +force_install_dir /home/steam/arma3/ \
 #        +app_update 233780 validate \
 #        +quit
 
+
 # Default tmux session
 # Create the directories used to store the profile files and Arma3.cfg file
-RUN echo 'new-session' >> ~/.tmux.conf \
-    && mkdir -p "~/.local/share/Arma 3" \
-    && mkdir -p "~/.local/share/Arma 3 - Other Profiles"
-
 WORKDIR /home/steam
-#RUN wget http://gameservermanagers.com/dl/arma3server -O arma3hc \
-#    && chmod +x arma3hc 
+RUN echo 'new-session' >> ~/.tmux.conf 
+RUN mkdir -p "/home/steam/.local/share/Arma 3" \
+    && mkdir -p "/home/steam/.local/share/Arma 3 - Other Profiles"
 
-# configure arma3hc
-#RUN echo sed \
-#        && sed -i "s/steamuser=\"anonymous\"/steamuser='$STEAM_USERNAME'/" arma3hc \
-#        && sed -i "s/steampass=\" \"/steampass='$STEAM_PASSWORD'/" arma3hc \
-#        && sed -i "s/ip=\"0.0.0.0\"/ip='$IP'\ntarget_ip='$TARGET_IP'/" arma3hc
+# retrieve lgsm scripts
+RUN wget http://gameservermanagers.com/dl/arma3server -O arma3server \
+	&& chmod +x arma3server
+
+# configure arma3server
+RUN echo sed \
+        && sed -i "s/steamuser=\"username\"/steamuser='thalhallatyr'/" arma3server \
+        && sed -i "s/steampass=\"password\"/steampass='asgard1776!'/" arma3server \
+        && sed -i "s/ip=\"0.0.0.0\"/ip='4.31.168.84'\ntarget_ip='162.248.91.24'/" arma3server
 
 # force install the arma3 server binaries
-#RUN yes y|./arma3hc install
+RUN yes y|./arma3server install
 
 # configure server to be a headless client
-#RUN sed -i \
-#    's|parms="-netlog -ip=${ip}|parms="-netlog -nosound -port=2302 -client -password=$PASSWORD -connect=${target_ip} -BEpath=/home/steam/BE -ip=${ip}|' \
-#    /home/steam/arma3hc
+RUN sed -i \
+    's|parms="-netlog -ip=${ip}|parms="-netlog -nosound -port=2302 -client -password= -connect=${target_ip} -BEpath=/home/steam/BE -ip=${ip}|' \
+    /home/steam/arma3server
 
 # configure ports to offset from default
 # WORKDIR /home/steam/serverfiles/cfg

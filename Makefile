@@ -56,12 +56,14 @@ rundocker:
 	@docker run --name=$(NAME) \
 	--cidfile="cid" \
 	-v $(TMP):/tmp \
+	-e TERM=xterm \
 	-d \
 	-e STEAM_USERNAME=$(STEAM_USERNAME) \
 	-e STEAM_PASSWORD=$(STEAM_PASSWORD) \
 	-e IP=$(IP) \
 	-e TARGET_IP=$(TARGET_IP) \
 	-e SERVER_PASSWORD=$(SERVER_PASSWORD) \
+	--net=host \
 	-P \
 	-v /var/run/docker.sock:/run/docker.sock \
 	-v $(shell which docker):/bin/docker \
