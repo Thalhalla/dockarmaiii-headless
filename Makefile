@@ -63,11 +63,23 @@ rundocker:
 	-e IP=$(IP) \
 	-e TARGET_IP=$(TARGET_IP) \
 	-e SERVER_PASSWORD=$(SERVER_PASSWORD) \
-	--net=host \
 	-P \
+	--net=host \
 	-v /var/run/docker.sock:/run/docker.sock \
 	-v $(shell which docker):/bin/docker \
+	-v /exports/remote_src/PDG/docker_volumes:/home/steam/pdg \
 	-t $(TAG)
+	# -p 4.31.168.84:2302:2302/udp \
+	# -p 4.31.168.84:2303:2303/udp \
+	# -p 4.31.168.84:2304:2304/udp \
+	# -p 4.31.168.84:2305:2305/udp \
+	# -p 4.31.168.84:2302:2302/tcp \
+	# -p 4.31.168.84:2303:2303/tcp \
+	# -p 4.31.168.84:2304:2304/tcp \
+	# -p 4.31.168.84:2305:2305/tcp \
+	# -p 4.31.168.84:2344:2344/tcp \
+	# -p 4.31.168.84:2345:2345/tcp \
+
 
 builddocker:
 	/usr/bin/time -v docker build -t `cat TAG` .
